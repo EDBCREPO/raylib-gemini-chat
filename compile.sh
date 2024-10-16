@@ -1,0 +1,1 @@
+time g++ -o main main.cpp -I./include -L./lib -lraylib -std=c++11 -lssl -lcrypto -lz ; ./main
