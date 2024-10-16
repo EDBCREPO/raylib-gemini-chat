@@ -8,7 +8,7 @@ Engage in dynamic conversations with Google's AI, Gemini, through a native appli
 ```
 
 ## Preview
-[Preview](https://github.com/user-attachments/assets/b09a8798-3dba-4e7b-9996-79415deead11)
+[Preview](https://github.com/user-attachments/assets/5060bd9f-0c87-4d99-bebd-f654b8146d68)
 
 ## Build & Use
 ```bash
