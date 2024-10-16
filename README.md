@@ -1,5 +1,5 @@
-# Cursed Luna
-A simple game made with C++, Nodepp and raylib
+# Gemini + Raylib
+Engage in dynamic conversations with Google's AI, Gemini, through a native application developed using C++, Nodepp, and raylib.
 
 ## Dependencies
 ```bash
