@@ -44,9 +44,7 @@ namespace rl { namespace scene {
                      obj->FullMessage = data; obj->Response.clear();
             })
 
-            .fail([=]( except_t err ){
-                console::log( err );
-            });
+            .fail([=]( except_t err ){ console::log( err ); });
 
         });
 
@@ -56,7 +54,7 @@ namespace rl { namespace scene {
 
             float w = GetRenderWidth(), h = GetRenderHeight(); ClearBackground( RAYWHITE );
 
-            GuiDrawText( obj->Response.get(), { 2*w/100, 2*h/100, 95*w/100, 95*h/100 }, 0, BLACK ); 
+            GuiDrawText( obj->Response.get(), { 2*w/100, 2*h/100, 96*w/100, 95*h/100 }, 0, BLACK ); 
 
             auto x = GuiTextBox( { 0, 95*h/100, 88*w/100, 5*h/100 }, obj->Message.get(), obj->Message.size(), true );
 
@@ -69,12 +67,17 @@ namespace rl { namespace scene {
     /*.........................................................................*/
 
         self->onLoop([=]( float delta ){ [=](){
+            static uint x = 0; static ulong y = 0;
         coStart
 
-            while( obj->Response != obj->FullMessage ){
-                obj->Response.push( obj->FullMessage[ obj->Response.size() ] );
-                coNext;
-            }
+            while( y != obj->FullMessage.size() && !obj->FullMessage.empty() ){
+               if( obj->FullMessage[ obj->Response.size() ]=='\n' ){ x=0; }
+               if( x >= 149 ){ obj->Response.push('\n'); x=0; } 
+                obj->Response.push( obj->FullMessage[y] );
+                x++; y++; coNext;
+            }   x=0; y=0;
+
+            while( !obj->Response.empty() ){ coNext; }
             
         coStop
         }(); });
