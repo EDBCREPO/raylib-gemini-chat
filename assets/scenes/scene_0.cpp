@@ -34,10 +34,16 @@ namespace rl { namespace scene {
             https::fetch( args, &ssl )
 
             .then([=]( https_t cli ){
-                auto req = json::parse( regex::replace_all( stream::await( cli ), "\\\\\"|*", "" ) );
+                try {
+                auto raw = stream::await( cli ); // console::log( raw );
+                auto req = json::parse( regex::replace_all( raw, "\\\\\"|*", "" ) );
                 auto data= req["candidates"][0]["content"]["parts"][0]["text"].as<string_t>();
                      data= regex::replace_all( data, "\\\\n", "\n" ); 
                      obj->FullMessage = data; obj->Response.clear();
+                } catch(...) { 
+                    obj->FullMessage = "Something Went Wrong"; 
+                    obj->Response.clear(); 
+                }
             })
 
             .fail([=]( except_t err ){ console::log( err ); });
