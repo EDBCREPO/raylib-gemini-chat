@@ -2,10 +2,6 @@
 
 /*────────────────────────────────────────────────────────────────────────────*/
 
-#include <nodepp/https.h>
-
-/*────────────────────────────────────────────────────────────────────────────*/
-
 namespace rl { namespace scene {
 
     void scene_0( ptr_t<Scene> self ) {
@@ -21,11 +17,6 @@ namespace rl { namespace scene {
             
             fetch_t args; ssl_t ssl; args.method = "POST";
                     args.url    = regex::format("${0}?key=${1}",process::env::get("URL"),process::env::get("API"));
-                    
-                    args.headers= header_t({
-                        { "Content-Type", path::mimetype(".json") },
-                        { "Host", url::hostname( args.url ) }
-                    });
 
                     args.body   = json::stringify( object_t({
                         { "contents", array_t<object_t>({ object_t({
@@ -34,6 +25,11 @@ namespace rl { namespace scene {
                             }) }) }
                         }) }) }
                     }) );
+                    
+                    args.headers= header_t({
+                        { "Content-Type", path::mimetype(".json") },
+                        { "Host", url::hostname( args.url ) }
+                    });
 
             https::fetch( args, &ssl )
 
@@ -56,7 +52,7 @@ namespace rl { namespace scene {
 
             GuiDrawText( obj->Response.get(), { 2*w/100, 2*h/100, 96*w/100, 95*h/100 }, 0, BLACK ); 
 
-            auto x = GuiTextBox( { 0, 95*h/100, 88*w/100, 5*h/100 }, obj->Message.get(), obj->Message.size(), true );
+            GuiTextBox( { 0, 95*h/100, 88*w/100, 5*h/100 }, obj->Message.get(), obj->Message.size(), true );
 
             if( GuiButton( { 88*w/100, 95*h/100, 12*w/100, 5*h/100 }, "Send" ) ){
                 onGPT.emit( obj->Message.copy() );  obj->Message.fill( '\0' );

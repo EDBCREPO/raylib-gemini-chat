@@ -1,6 +1,7 @@
 #include <nodepp/nodepp.h>
 #include <nodepp/https.h>
 #include <nodepp/path.h>
+#include <nodepp/json.h>
 #include <nodepp/url.h>
 
 using namespace nodepp;
